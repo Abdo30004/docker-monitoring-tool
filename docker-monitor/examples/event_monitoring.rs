@@ -7,10 +7,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     println!("Docker Monitor - Event Monitoring Example\n");
     println!("Listening for Docker events... (Press Ctrl+C to stop)\n");
 
-    // Create a new monitor instance
     let monitor = DockerMonitor::new().await?;
 
-    // Define a callback function
     let callback = Arc::new(|event: DockerEvent| {
         println!(
             "[{}] {} - Container: {} (ID: {})",
@@ -21,7 +19,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         );
     });
 
-    // Start monitoring events
     monitor.monitor_events(callback).await?;
 
     Ok(())

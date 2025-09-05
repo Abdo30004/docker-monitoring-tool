@@ -35,7 +35,6 @@ impl DockerMonitor {
             DockerMonitorError::DaemonUnavailable(e.to_string())
         )?;
 
-        // Test connection
         docker
             .ping().await
             .map_err(|e| {
@@ -207,7 +206,6 @@ impl DockerMonitor {
                 DockerMonitorError::MetricsUnavailable(format!("Failed to get stats: {}", e))
             })?;
 
-            // Parse CPU stats
             let cpu_stats = {
                 let cpu_delta =
                     stats.cpu_stats.cpu_usage.total_usage -
@@ -231,7 +229,6 @@ impl DockerMonitor {
                 }
             };
 
-            // Parse memory stats
             let memory_stats = {
                 let usage = stats.memory_stats.usage.unwrap_or(0);
                 let limit = stats.memory_stats.limit.unwrap_or(1);
@@ -249,7 +246,6 @@ impl DockerMonitor {
                 }
             };
 
-            // Parse network stats
             let network_stats = if let Some(networks) = stats.networks {
                 let mut total_rx = 0u64;
                 let mut total_tx = 0u64;
@@ -279,7 +275,6 @@ impl DockerMonitor {
                 NetworkStats::new()
             };
 
-            // Parse disk stats
             let disk_stats = {
                 let mut read_bytes = 0u64;
                 let mut write_bytes = 0u64;
@@ -323,7 +318,6 @@ impl DockerMonitor {
                 }
             };
 
-            // Get container name
             let container_name = stats.name.clone();
 
             Ok(ContainerMetrics {

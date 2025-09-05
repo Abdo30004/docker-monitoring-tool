@@ -2,10 +2,8 @@ use docker_monitor::{ DockerMonitor, ContainerStatus };
 
 #[tokio::test]
 async fn test_docker_monitor_creation() {
-    // This test will only pass if Docker daemon is running
     let result = DockerMonitor::new().await;
 
-    // We don't assert success because Docker might not be available in CI
     match result {
         Ok(_) => println!("Successfully connected to Docker daemon"),
         Err(e) => println!("Docker daemon not available: {}", e),

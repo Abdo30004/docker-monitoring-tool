@@ -14,22 +14,18 @@ use std::io;
 use std::time::Duration;
 
 pub async fn run_tui(refresh_interval: u64) -> Result<()> {
-    // Setup terminal
     enable_raw_mode()?;
     let mut stdout = io::stdout();
     execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
 
-    // Create app state
     let mut app = App::new(refresh_interval);
 
-    // Initial data fetch
     app.update().await?;
 
     let result = run_app(&mut terminal, &mut app, refresh_interval).await;
 
-    // Restore terminal
     disable_raw_mode()?;
     execute!(terminal.backend_mut(), LeaveAlternateScreen, DisableMouseCapture)?;
     terminal.show_cursor()?;

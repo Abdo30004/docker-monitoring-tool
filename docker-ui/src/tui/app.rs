@@ -53,7 +53,6 @@ impl App {
 
         match DockerMonitor::new().await {
             Ok(monitor) => {
-                // Fetch containers
                 match monitor.list_containers().await {
                     Ok(containers) => {
                         self.total_containers = containers.len();
@@ -63,7 +62,6 @@ impl App {
                             .count();
                         self.containers = containers;
 
-                        // Fetch metrics for running containers
                         self.metrics.clear();
                         for container in &self.containers {
                             if matches!(container.status, ContainerStatus::Running) {

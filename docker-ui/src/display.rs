@@ -220,7 +220,6 @@ pub fn display_metrics(metrics: &ContainerMetrics) {
         metrics.timestamp.format("%Y-%m-%d %H:%M:%S").to_string().dimmed()
     );
 
-    // CPU Stats
     println!();
     println!("{}", "CPU Usage:".bright_yellow().bold());
     println!(
@@ -235,7 +234,6 @@ pub fn display_metrics(metrics: &ContainerMetrics) {
     );
     println!("  {:<18} {}", "Online CPUs:", metrics.cpu_stats.online_cpus.to_string().cyan());
 
-    // Memory Stats
     println!();
     println!("{}", "Memory Usage:".bright_magenta().bold());
     println!(
@@ -247,7 +245,6 @@ pub fn display_metrics(metrics: &ContainerMetrics) {
     println!("  {:<18} {}", "Limit:", format_bytes(metrics.memory_stats.limit).dimmed());
     println!("  {:<18} {}", "Max Usage:", format_bytes(metrics.memory_stats.max_usage).dimmed());
 
-    // Network Stats
     println!();
     println!("{}", "Network I/O:".bright_cyan().bold());
     println!(
@@ -271,7 +268,6 @@ pub fn display_metrics(metrics: &ContainerMetrics) {
         );
     }
 
-    // Disk Stats
     println!();
     println!("{}", "Disk I/O:".bright_green().bold());
     println!(

@@ -92,7 +92,6 @@ enum Commands {
 async fn main() -> Result<()> {
     let cli = Cli::parse();
 
-    // Print header
     display::print_header();
 
     match cli.command {
@@ -121,7 +120,6 @@ async fn main() -> Result<()> {
             commands::system_info().await?;
         }
         Commands::Monitor { interval } => {
-            // Don't print header for TUI mode
             tui::run_tui(interval).await?;
             return Ok(());
         }

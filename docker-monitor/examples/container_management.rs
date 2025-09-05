@@ -7,7 +7,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let monitor = DockerMonitor::new().await?;
 
-    // List all running containers
     let containers = monitor.list_containers().await?;
 
     if containers.is_empty() {
@@ -25,7 +24,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         println!("  Image: {}", container.image);
         println!("  Status: {}", container.status);
 
-        // Get detailed information
         match monitor.get_container_details(&container.id).await {
             Ok(details) => {
                 println!("  State: {}", details.state);
@@ -37,8 +35,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         println!();
     }
 
-    // Example: Stop and start a container (commented out for safety)
-    // Uncomment and modify the container name to use
     /*
     let container_name = "test-container";
     

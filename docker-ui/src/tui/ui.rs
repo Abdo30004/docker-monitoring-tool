@@ -98,7 +98,6 @@ fn draw_overview(f: &mut Frame, app: &App, area: Rect) {
         ])
         .split(area);
 
-    // Stats boxes
     let stats_chunks = Layout::default()
         .direction(Direction::Horizontal)
         .constraints([
@@ -108,7 +107,6 @@ fn draw_overview(f: &mut Frame, app: &App, area: Rect) {
         ])
         .split(chunks[0]);
 
-    // Total containers
     let total_text = vec![
         Line::from(""),
         Line::from(vec![Span::styled("Total", Style::default().fg(Color::Gray))]),
@@ -131,7 +129,6 @@ fn draw_overview(f: &mut Frame, app: &App, area: Rect) {
         .alignment(Alignment::Center);
     f.render_widget(total_block, stats_chunks[0]);
 
-    // Running containers
     let running_text = vec![
         Line::from(""),
         Line::from(vec![Span::styled("Running", Style::default().fg(Color::Gray))]),
@@ -154,7 +151,6 @@ fn draw_overview(f: &mut Frame, app: &App, area: Rect) {
         .alignment(Alignment::Center);
     f.render_widget(running_block, stats_chunks[1]);
 
-    // Stopped containers
     let stopped = app.total_containers - app.running_containers;
     let stopped_text = vec![
         Line::from(""),
@@ -178,7 +174,6 @@ fn draw_overview(f: &mut Frame, app: &App, area: Rect) {
         .alignment(Alignment::Center);
     f.render_widget(stopped_block, stats_chunks[2]);
 
-    // Container summary list
     if app.error_message.is_some() {
         draw_error(f, app, chunks[1]);
     } else {
@@ -346,7 +341,6 @@ fn draw_metrics(f: &mut Frame, app: &App, area: Rect) {
         ])
         .split(area);
 
-    // Container name
     let title = Paragraph::new(
         vec![
             Line::from(
@@ -366,7 +360,6 @@ fn draw_metrics(f: &mut Frame, app: &App, area: Rect) {
         .alignment(Alignment::Center);
     f.render_widget(title, chunks[0]);
 
-    // CPU
     let cpu_percent = metrics.cpu_stats.usage_percent.clamp(0.0, 100.0) as u16;
     let cpu_gauge = Gauge::default()
         .block(Block::default().borders(Borders::ALL).title("🔥 CPU Usage"))
@@ -385,7 +378,6 @@ fn draw_metrics(f: &mut Frame, app: &App, area: Rect) {
         .label(format!("{:.2}%", metrics.cpu_stats.usage_percent));
     f.render_widget(cpu_gauge, chunks[1]);
 
-    // Memory
     let mem_percent = metrics.memory_stats.usage_percent.clamp(0.0, 100.0) as u16;
     let mem_label = format!(
         "{:.2}% ({} / {})",
@@ -410,7 +402,6 @@ fn draw_metrics(f: &mut Frame, app: &App, area: Rect) {
         .label(mem_label);
     f.render_widget(mem_gauge, chunks[2]);
 
-    // Network
     let network_text = vec![
         Line::from(""),
         Line::from(
@@ -440,7 +431,6 @@ fn draw_metrics(f: &mut Frame, app: &App, area: Rect) {
         .alignment(Alignment::Center);
     f.render_widget(network_block, chunks[3]);
 
-    // Disk
     let disk_text = vec![
         Line::from(""),
         Line::from(

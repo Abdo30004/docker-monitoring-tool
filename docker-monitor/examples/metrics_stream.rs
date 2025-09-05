@@ -8,7 +8,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let monitor = DockerMonitor::new().await?;
 
-    // Get running containers
     let containers = monitor.list_containers().await?;
 
     if containers.is_empty() {
@@ -20,7 +19,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
     println!("Monitoring metrics for: {}\n", container.name);
     println!("Press Ctrl+C to stop\n");
 
-    // Stream metrics every 2 seconds
     loop {
         match monitor.get_container_metrics(&container.id).await {
             Ok(metrics) => {

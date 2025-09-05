@@ -10,7 +10,6 @@ use crate::display;
 pub async fn list_containers(_all: bool, format: &str) -> Result<()> {
     let spinner = display::create_spinner("Connecting to Docker daemon...");
 
-    // TODO: Implement --all flag to show stopped containers
     let monitor = DockerMonitor::new().await.context(
         "Failed to connect to Docker daemon. Is Docker running?"
     )?;
@@ -67,7 +66,6 @@ pub async fn container_metrics(container_id: &str, follow: bool, interval: u64) 
         println!();
 
         loop {
-            // Clear screen
             print!("\x1B[2J\x1B[1;1H");
             display::print_header();
 
@@ -106,7 +104,6 @@ pub async fn dashboard(interval: u64) -> Result<()> {
     println!();
 
     loop {
-        // Clear screen
         print!("\x1B[2J\x1B[1;1H");
         display::print_header();
 
@@ -185,7 +182,6 @@ pub async fn monitor_events(filter: Option<String>) -> Result<()> {
 
     let filter_clone = filter.clone();
     let callback = Arc::new(move |event: DockerEvent| {
-        // Apply filter if specified
         if let Some(ref filter_str) = filter_clone {
             let event_name = format!("{:?}", event.event_type).to_lowercase();
             if !event_name.contains(&filter_str.to_lowercase()) {
@@ -241,7 +237,6 @@ pub async fn system_info() -> Result<()> {
         containers.len().to_string().cyan().bold()
     );
 
-    // Count by status
     let running = containers
         .iter()
         .filter(|c| matches!(c.status, docker_monitor::ContainerStatus::Running))
@@ -255,7 +250,6 @@ pub async fn system_info() -> Result<()> {
         stopped.to_string().red()
     );
 
-    // Collect unique images
     let unique_images: std::collections::HashSet<_> = containers
         .iter()
         .map(|c| c.image.as_str())

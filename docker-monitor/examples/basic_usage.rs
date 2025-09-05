@@ -5,11 +5,9 @@ use std::error::Error;
 async fn main() -> Result<(), Box<dyn Error>> {
     println!("Docker Monitor - Basic Usage Example\n");
 
-    // Create a new monitor instance
     let monitor = DockerMonitor::new().await?;
     println!("✓ Connected to Docker daemon\n");
 
-    // List all running containers
     println!("=== Running Containers ===");
     let containers = monitor.list_containers().await?;
 
@@ -25,7 +23,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         println!("  Status: {}", container.status);
     }
 
-    // Get metrics for the first container
     if let Some(container) = containers.first() {
         println!("\n=== Metrics for {} ===", container.name);
         let metrics = monitor.get_container_metrics(&container.id).await?;
