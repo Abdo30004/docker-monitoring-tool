@@ -179,7 +179,7 @@ cargo run --example metrics_stream
 ## Testing
 
 ```bash
-cd /home/runner/work/docker-monitoring-tool/docker-monitoring-tool/docker-monitor
+cd /home/docker-monitoring-tool/docker-monitor
 cargo test
 ```
 
