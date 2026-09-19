@@ -116,7 +116,7 @@ sequenceDiagram
 ### Build
 
 ```bash
-cd /home/runner/work/docker-monitoring-tool/docker-monitoring-tool/docker-ui
+cd /home/docker-monitoring-tool/docker-ui
 cargo build
 ```
 
@@ -169,7 +169,7 @@ cargo run -- monitor --interval 1
 From `docker-monitor` crate:
 
 ```bash
-cd /home/runner/work/docker-monitoring-tool/docker-monitoring-tool/docker-monitor
+cd /home/docker-monitoring-tool/docker-monitor
 cargo run --example basic_usage
 cargo run --example container_management
 cargo run --example event_monitoring
